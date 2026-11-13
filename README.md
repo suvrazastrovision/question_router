@@ -1,6 +1,8 @@
 ## Smart Question Router
 
-Meet Suvra's simplest "Neuroscience Oracle Bot" that can make tough decision!
+Meet Suvra's simplest "Neuroscience Oracle Bot" that can (?) make tough decision! Well, not yet!
+
+I was wandering about how to incorporate better decision making with "AI Systems Design" while dealing with tough scientific questions, and came across this recently lauched JEV from Typescript. This repo is a small playground experiment of my never-ending learning journey. I have tried following:
 
 `Question → Jev classification → Python triage → Domain-specific LLM answer`
 
