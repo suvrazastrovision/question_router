@@ -47,3 +47,15 @@ gene variants, projections, and DREADDs. Hypothetical mechanisms are labeled.
 Live evaluation saves classification and routing accuracy to
 `evaluation-results.json`. API errors count as failures; answer quality is not
 graded. Jev confidence is not measured accuracy.
+
+## Personal opinion
+
+| Positive | Negative | Confused |
+| --- | --- | --- |
+| ![A straightforward hippocampus question routes successfully.](docs/images/jev-positive.png) | ![An explicit scientific question still triggers clarification.](docs/images/jev-negative.png) | ![An unrelated food request receives a neuroscience clarification.](docs/images/jev-confused.png) |
+| A clear question routes successfully. | A detailed scientific question gets stalled. | A food request gets a neuroscience follow-up. |
+
+For simple fact retrieval and reranking, my instinct is to improve prompting before
+adding another agent. I'll keep sharing my experience as I push this model toward
+scalable systems and tougher scientific decisions. Can better prompts close the
+gap, or do we need a better model for scientific decision-making?
