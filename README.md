@@ -50,7 +50,7 @@ graded. Jev confidence is not measured accuracy.
 
 ## Personal opinion
 
-| Positive | Negative | Confused |
+| Positive | Confused | Negative |
 | --- | --- | --- |
 | ![A straightforward hippocampus question routes successfully.](docs/images/jev-positive.png) | ![An explicit scientific question still triggers clarification.](docs/images/jev-negative.png) | ![An unrelated food request receives a neuroscience clarification.](docs/images/jev-confused.png) |
 | A clear question routes successfully. | A detailed scientific question gets stalled. | A food request gets a neuroscience follow-up. |
@@ -58,4 +58,4 @@ graded. Jev confidence is not measured accuracy.
 For simple fact retrieval and reranking, my instinct is to improve prompting before
 adding another agent. I'll keep sharing my experience as I push this model toward
 scalable systems and tougher scientific decisions. Can better prompts close the
-gap, or do we need a better model for scientific decision-making?
+gap, or do we need a better model for scientific decision-making? How will that differ when multiple scientific variables comes into play? Stay tuned, will be updating soon in my next cross model comparision repo :)  
