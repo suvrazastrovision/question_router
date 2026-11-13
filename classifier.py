@@ -6,7 +6,15 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import StrEnum
 
-from typesafe_sdk import Choice, TypeSafeClient, TypeSafeError
+from typesafe_sdk import (
+    Choice,
+    TypeSafeAPIConnectionError,
+    TypeSafeAPIError,
+    TypeSafeAPIResponseValidationError,
+    TypeSafeAPITimeoutError,
+    TypeSafeClient,
+    TypeSafeError,
+)
 
 from conversation import ChatMessage, recent_history
 
@@ -88,7 +96,34 @@ def classify_question(
             )
         answer = response.choices["domain"]
         return Classification(Category(answer.choice), answer.confidence)
-    except (TypeSafeError, ValueError, KeyError, TypeError) as exc:
+    except TypeSafeAPITimeoutError as exc:
+        raise ClassificationError("Jev request timed out. Please retry.") from exc
+    except TypeSafeAPIConnectionError as exc:
         raise ClassificationError(
-            "Jev classification failed. Check your TypeSafe key, model access, and connection, then retry."
+            "Cannot connect to TypeSafe. Check this app's network access, proxy, or firewall, then retry."
         ) from exc
+    except TypeSafeAPIResponseValidationError as exc:
+        raise ClassificationError("Jev returned an invalid classification response. Please retry.") from exc
+    except TypeSafeAPIError as exc:
+        # Keep raw response bodies and credentials out of the UI.
+        messages = {
+            400: "TypeSafe rejected the classification request (HTTP 400). Check the model and request configuration.",
+            401: "TypeSafe rejected your API key (HTTP 401). Update TYPESAFE_API_KEY in .env and restart the app.",
+            403: "TypeSafe denied access (HTTP 403). Check your account permissions and model access.",
+            404: "TypeSafe model or endpoint was not found (HTTP 404). Check TYPESAFE_DEFAULT_MODEL and TYPESAFE_BASE_URL.",
+            422: "TypeSafe rejected the classification request (HTTP 422). Check the model and request configuration.",
+            429: "TypeSafe rate limit reached (HTTP 429). Wait briefly, then retry.",
+        }
+        message = messages.get(exc.status)
+        if message is None:
+            if exc.status >= 500:
+                message = f"TypeSafe is temporarily unavailable (HTTP {exc.status}). Please retry later."
+            else:
+                message = f"Jev request failed (HTTP {exc.status}). Check your TypeSafe account and configuration."
+        raise ClassificationError(message) from exc
+    except TypeSafeError as exc:
+        raise ClassificationError(
+            "Jev client configuration failed. Check your TypeSafe key format and configuration."
+        ) from exc
+    except (ValueError, KeyError, TypeError) as exc:
+        raise ClassificationError("Jev returned an invalid classification response. Please retry.") from exc
