@@ -6,4 +6,3 @@ pytest-cache-files-*/
 .env.*
 !.env.example
 .streamlit/secrets.toml
-evaluation-results.json

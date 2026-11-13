@@ -50,6 +50,17 @@ Live evaluation saves classification and routing accuracy to
 `evaluation-results.json`. API errors count as failures; answer quality is not
 graded. Jev confidence is not measured accuracy.
 
+### Evaluation results
+
+```text
+Completed: 28/28; errors: 0
+Classification accuracy: 100.0%
+Routing accuracy: 96.4%
+Denominator: all 28 questions; API errors count as failures.
+```
+
+Full details: [evaluation-results.json](evaluation-results.json).
+
 ## Personal opinion
 
 | Positive | Confused | Negative |
