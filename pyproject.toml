@@ -1,0 +1,18 @@
+[project]
+name = "smart-question-router"
+version = "0.1.0"
+description = "Learn classification, deterministic triage, and LLM generation with Jev."
+requires-python = ">=3.12"
+dependencies = [
+    "typesafe-sdk>=0.7.5,<0.8",
+    "openai>=2,<3",
+    "streamlit>=1.41,<2",
+    "python-dotenv>=1,<2",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
